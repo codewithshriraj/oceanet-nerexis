@@ -1,0 +1,302 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Design tokens / CSS variables */
+  --color-primary: #1f2937;
+  --color-marine-slate: #374151;
+  --color-bioluminescent: #2563eb;
+  --color-neon-coral: #dc2626;
+  --color-neon-coral-alt: #b91c1c;
+  --color-coral: #f87171;
+  --color-goldenrod: #d97706;
+  --color-electric-violet: #7c3aed;
+  --color-seafoam: #059669;
+
+  /* Section accents by web app route */
+  --accent-home: #111827;
+  --accent-dashboard: #1f2937;
+  --accent-data-hub: #374151;
+  --accent-analytics: #4b5563;
+  --accent-news: #6b7280;
+  --accent-reports: #4b5563;
+  --accent-ai: #374151;
+  --accent-api: #1f2937;
+
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --deep-twilight: #d1d5db;
+
+  --glow-teal: rgba(17, 24, 39, 0.1);
+  --glow-coral: rgba(17, 24, 39, 0.12);
+}
+
+body {
+  @apply text-text-primary;
+  font-family: var(--font-sans), "Segoe UI", sans-serif;
+  line-height: 1.6;
+  letter-spacing: 0.005em;
+  background: #f5f5f5;
+  background-attachment: fixed;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+p,
+li,
+span {
+  line-height: 1.6;
+}
+
+/* Background texture */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(17, 24, 39, 0.05), transparent 38%),
+    radial-gradient(circle at 85% 18%, rgba(55, 65, 81, 0.05), transparent 40%),
+    radial-gradient(circle at 86% 84%, rgba(107, 114, 128, 0.04), transparent 38%),
+    radial-gradient(circle at 18% 88%, rgba(31, 41, 55, 0.03), transparent 35%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  main {
+    margin-left: 16rem;
+  }
+}
+
+/* Glassmorphism utility */
+.glass {
+  @apply bg-white border border-slate-200 rounded-xl;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass:hover {
+  @apply border-slate-300;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.09);
+}
+
+.glass-hover {
+  @apply glass hover:bg-opacity-10 hover:border-opacity-20 hover:shadow-glow;
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent font-bold;
+}
+
+/* Neon text */
+.neon-text {
+  @apply text-neon-blue drop-shadow-lg;
+  text-shadow: none;
+}
+
+/* Chart customization */
+.chart-container {
+  @apply glass rounded-xl p-6;
+}
+
+/* Loading skeleton */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton {
+  @apply bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded-lg;
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-r from-primary to-secondary rounded-full;
+  box-shadow: 0 0 10px rgba(17, 24, 39, 0.14);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  box-shadow: 0 0 15px rgba(17, 24, 39, 0.2);
+}
+
+/* Smooth page transitions */
+.page-transition {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .btn {
+    @apply px-4 py-2 text-sm;
+  }
+  
+  .card {
+    @apply p-4;
+  }
+}
+
+/* Button styles with animation */
+.btn {
+  @apply px-6 py-3 rounded-lg font-bold transition-all duration-200 cursor-pointer;
+  position: relative;
+  overflow: clip;
+  border: none;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+  z-index: 0;
+}
+
+.btn:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-primary {
+  @apply btn text-white;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-marine-slate));
+  box-shadow: 0 6px 16px rgba(17, 24, 39, 0.2);
+}
+
+.btn-primary:hover {
+  @apply shadow-none;
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #111827, #374151);
+  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.24);
+}
+
+.btn-secondary {
+  @apply btn;
+  background: #ffffff;
+  color: var(--text-primary);
+  border: 1px solid #cfd9e3;
+}
+
+.btn-secondary:hover {
+  @apply shadow-none;
+  border-color: #b8c6d5;
+  background: #f8fafc;
+  transform: translateY(-1px);
+}
+
+.btn-orange {
+  @apply btn;
+  background: linear-gradient(135deg, var(--color-neon-coral), var(--color-neon-coral-alt));
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(17, 24, 39, 0.2);
+}
+
+.btn-orange:hover {
+  background: linear-gradient(135deg, #4b5563, #111827);
+  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.24);
+  transform: translateY(-1px);
+}
+
+/* Card styles with depth */
+.card {
+  @apply glass p-6 rounded-xl;
+}
+
+.card-hover {
+  @apply card hover:shadow-glow hover:border-opacity-30;
+  transition: all 0.2s ease;
+}
+
+/* Animated badge */
+.badge {
+  @apply inline-block px-4 py-2 rounded-full text-sm font-semibold;
+}
+
+.badge-success {
+  @apply badge bg-seafoam bg-opacity-10 text-seafoam border border-seafoam border-opacity-25;
+}
+
+.badge-warning {
+  @apply badge bg-goldenrod bg-opacity-15 text-goldenrod border border-goldenrod border-opacity-30;
+}
+
+.badge-error {
+  @apply badge bg-neon-coral-alt bg-opacity-10 text-neon-coral-alt border border-neon-coral-alt border-opacity-30;
+}
+
+.badge-info {
+  @apply badge bg-info bg-opacity-10 text-info border border-info border-opacity-25;
+}
+
+/* Status indicators */
+.status-dot {
+  @apply w-2 h-2 rounded-full;
+}
+
+.status-dot.online {
+  @apply bg-seafoam shadow-glow;
+}
+
+.status-dot.offline {
+  @apply bg-gray-500;
+}
+
+.status-dot.warning {
+  @apply bg-neon-coral;
+}

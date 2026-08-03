@@ -1,0 +1,2 @@
+powershell -ExecutionPolicy Bypass -File .\oceanet-platform\OCEANet\run-all.ps1
+

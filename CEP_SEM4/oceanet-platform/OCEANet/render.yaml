@@ -1,0 +1,41 @@
+services:
+  - type: web
+    name: oceanet-backend
+    plan: starter
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: alembic upgrade head ; gunicorn app.main:app -c gunicorn_conf.py --bind 0.0.0.0:$PORT
+    healthCheckPath: /health
+    autoDeploy: true
+    disks:
+      - name: oceanet-backend-data
+        mountPath: /var/data
+        sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: OCEANET_DATA_ROOT
+        value: /var/data
+      - key: OCEANET_DATASET_REFRESH_INTERVAL_SECONDS
+        value: 60
+      - key: OCEANET_GFW_API_TOKEN
+        sync: false
+      - key: OCEANET_CORS_ALLOWED_ORIGINS
+        value: https://your-frontend-domain.vercel.app
+      - key: OCEANET_FRONTEND_PUBLIC_BASE_URL
+        value: https://your-frontend-domain.vercel.app
+
+  - type: web
+    name: oceanet-frontend
+    plan: starter
+    runtime: node
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: NEXT_PUBLIC_API_BASE_URL
+        value: https://your-backend-domain.onrender.com
